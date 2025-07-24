@@ -1,2 +1,2 @@
 # TOP-calculator
-TOP's calculator, last project for TOP Foundations
+Calculator for TOP, last project for TOP Foundations
