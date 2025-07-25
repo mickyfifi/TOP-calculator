@@ -48,9 +48,17 @@ body {
 }
 
 .row * {
-    flex: 2 1 100%;
+    flex: 2 1 25%;
 }
 
 button {
     font-size: 18px;
+}
+
+#c-btn {
+    flex: 0 0 25%;
+}
+
+#equals-btn {
+    flex: 1 1 75%;
 }

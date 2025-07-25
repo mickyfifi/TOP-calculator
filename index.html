@@ -10,7 +10,7 @@
 <body>
     <h1>Mickyfifi's TOP Calculator</h1>
     <div id="calculator">
-    <input type="text" value="555" id="screen">
+    <input type="text" readonly value="555" id="screen">
         
     </input>
         <div id="buttonPad">
@@ -33,13 +33,14 @@
                 <button>-</button>
             </div>
             <div class="row">
-                <button>C</button>
+                <button>Del</button>
                 <button>0</button>
                 <button>.</button>
                 <button>+</button>
             </div>
             <div class="row">
-                <button>=</button>
+                <button id="c-btn">C</button>
+                <button id="equals-btn">=</button>
             </div>
         </div>
     </div>
