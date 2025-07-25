@@ -31,10 +31,27 @@ function operate(operator, num1, num2) {
             break;
         case 3:
             divide(num1, num2);
-            break;
-
-            
+            break;     
     }
         
 
 }
+
+function populate() {
+
+}
+
+const calculatorElement = document.querySelector('#calculator');
+const screenElement = document.querySelector('#screen');
+
+calculatorElement.addEventListener('click', (event) => {
+    if (event.target.localName == 'button') {
+        screenElement.value += event.target.textContent;
+    }
+
+    if (event.target.textContent == 'C') {
+        screenElement.value = '';
+    }
+
+
+});
