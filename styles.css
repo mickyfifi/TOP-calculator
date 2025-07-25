@@ -22,7 +22,13 @@ body {
 
 #screen {
     border: 2px solid black;
-    height: 200px;
+    height: 100px;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    overflow-x: hidden;
+    text-align: right;
+    font-size: 40px;
 }
 
 #buttonPad {
