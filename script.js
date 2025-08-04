@@ -7,11 +7,11 @@ function subtract(num1, num2) {
 }
 
 function multiply(num1, num2) {
-    return num1 - num2;
+    return num1 * num2;
 }
 
 function divide(num1, num2) {
-    return num1 - num2;
+    return num1 / num2;
 }
 
 const OPERATORS = '+-*/';
@@ -90,20 +90,36 @@ function calculate(buttonPress) {
         return '';
     }
 
-    const calculation = screenElement.value;
-    const operator = getOperator(calculation);
+    const formulaValues = getFormulaValues(screenElement.value);
+
+
+    if ( (!('operator' in formulaValues)) || (!('secondNumber' in formulaValues))) {
+        return '';
+    }
+
+    return operate(formulaValues.operator, formulaValues.firstNumber, formulaValues.secondNumber);
+
+}
+
+function getFormulaValues(text) {
+    if (!text || text == null) {
+        return null;
+    }
+
+    const operator = getOperator(text);
 
     if (!operator) {
-        return '';
+        return {'firstNumber': text};
     }
 
-    const pieces = calculation.split(operator);
+    const pieces = text.split(operator);
 
     if (!pieces[1]) {
-        return '';
+        return {'firstNumber': pieces[0], 'operator': operator};
     }
 
-    return operate(operator, Number(pieces[0]), Number(pieces[1]));
+    return {'firstNumber': pieces[0], 'operator': operator, 'secondNumber': pieces[1]};
+
 
 }
 
