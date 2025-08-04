@@ -49,7 +49,10 @@ const calculatorElement = document.querySelector('#calculator');
 const screenElement = document.querySelector('#screen');
 
 calculatorElement.addEventListener('click', (event) => {
-    processInput(event.target.textContent);
+    
+    if (event.target.nodeName == 'BUTTON') {
+        processInput(event.target.textContent);
+    }
     
 });
 
@@ -80,7 +83,10 @@ function processInput(input) {
         clear();
     }
 
-    screenElement.value += input;   
+    screenElement.value += input;
+    
+    console.log(countDecimalPoint(screenElement.value));
+    console.log('dp -> ' + filterDecimalPoint(screenElement.value));
 
 }
 
@@ -125,17 +131,41 @@ function getFormulaValues(text) {
 
 function filterDecimalPoint(text) {
 
-    const calculation = screenElement.value;
-    const operator = getOperator(calculation);
+    const formulaValues = getFormulaValues(screenElement.value);
 
-    if (!operator) {
+    if (!formulaValues) {
         return '';
     }
 
-    const pieces = calculation.split(operator);
+    let firstNumber = formulaValues.firstNumber;
 
-    if (!pieces[1]) {
-        return '';
+    const firstNumberDPCount = countDecimalPoint(formulaValues.firstNumber);
+ 
+    if (firstNumberDPCount > 1) {
+        const indexOfFirstDP = firstNumber.indexOf('.');
+        const otherDPString = firstNumber.slice(indexOfFirstDP + 1).replaceAll('.', '');
+        firstNumber = firstNumber.slice(0, indexOfFirstDP + 1) + otherDPString;
     }
-    
+
+    if (!('operator' in formulaValues)) {
+        return firstNumber;
+    }
+
+
+    if (!('secondNumber' in formulaValues)) {
+        return firstNumber + formulaValues.operator;
+    }
+
+    let secondNumber = formulaValues.secondNumber;
+
+}
+
+function countDecimalPoint(text) {
+    const decimalPoint = text.match(/\./g);
+
+    if (!decimalPoint) {
+        return 0;
+    }
+
+    return decimalPoint.length;
 }
