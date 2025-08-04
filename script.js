@@ -15,7 +15,7 @@ function divide(num1, num2) {
 }
 
 const OPERATORS = '+-*/';
-let isResultDisplayed = false;
+let result = 'result';
 
 function operate(operator, num1, num2) {
     switch(operator){
@@ -72,18 +72,23 @@ function processInput(input) {
     let equals = calculate(input);
     if (equals) {
         screenElement.value = equals;
-        isResultDisplayed = true;
+        result = equals;
     }
 
     if (input == '=') {
         return;
     }
 
-    if (input.match(/[0-9.]/) && isResultDisplayed) {
+    if (input.match(/[0-9.]/) && result == screenElement.value) {
         clear();
+        result = 'result';
     }
 
     screenElement.value += input;
+
+    if (result != screenElement.value) {
+        result = 'result';
+    }
 
     screenElement.value = filterDecimalPoint(screenElement.value);
     
@@ -102,7 +107,7 @@ function calculate(buttonPress) {
         return '';
     }
 
-    return operate(formulaValues.operator, formulaValues.firstNumber, formulaValues.secondNumber);
+    return operate(formulaValues.operator, Number(formulaValues.firstNumber), Number(formulaValues.secondNumber));
 
 }
 
