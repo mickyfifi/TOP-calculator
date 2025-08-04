@@ -84,10 +84,9 @@ function processInput(input) {
     }
 
     screenElement.value += input;
-    
-    console.log(countDecimalPoint(screenElement.value));
-    console.log('dp -> ' + filterDecimalPoint(screenElement.value));
 
+    screenElement.value = filterDecimalPoint(screenElement.value);
+    
 }
 
 function calculate(buttonPress) {
@@ -137,15 +136,7 @@ function filterDecimalPoint(text) {
         return '';
     }
 
-    let firstNumber = formulaValues.firstNumber;
-
-    const firstNumberDPCount = countDecimalPoint(formulaValues.firstNumber);
- 
-    if (firstNumberDPCount > 1) {
-        const indexOfFirstDP = firstNumber.indexOf('.');
-        const otherDPString = firstNumber.slice(indexOfFirstDP + 1).replaceAll('.', '');
-        firstNumber = firstNumber.slice(0, indexOfFirstDP + 1) + otherDPString;
-    }
+    let firstNumber = removeDuplicateDecimalPoints(formulaValues.firstNumber);
 
     if (!('operator' in formulaValues)) {
         return firstNumber;
@@ -156,7 +147,23 @@ function filterDecimalPoint(text) {
         return firstNumber + formulaValues.operator;
     }
 
-    let secondNumber = formulaValues.secondNumber;
+    let secondNumber = removeDuplicateDecimalPoints(formulaValues.secondNumber);
+
+    return firstNumber + formulaValues.operator + secondNumber;
+
+}
+
+function removeDuplicateDecimalPoints(text) {
+    const DecimalPointCount = countDecimalPoint(text);
+
+    if (DecimalPointCount < 2) {
+        return text;
+    }
+
+    const indexOfFirstDP = text.indexOf('.');
+    const otherDPString = text.slice(indexOfFirstDP + 1).replaceAll('.', '');
+
+    return text.slice(0, indexOfFirstDP + 1) + otherDPString;
 
 }
 
