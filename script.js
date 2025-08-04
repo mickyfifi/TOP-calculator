@@ -56,7 +56,32 @@ calculatorElement.addEventListener('click', (event) => {
     
 });
 
+document.addEventListener('keydown', (event) => {
+
+    let input = event.key;
+
+    if (event.key == 'Backspace') {
+        input = 'Del';
+    }
+
+    if (event.key == 'c') {
+        input = 'C';
+    }
+
+    if (event.key == 'Enter') {
+        input = '=';
+    }
+
+    processInput(input);
+});
+
 function processInput(input) {
+    const inputsAllowed = /^[0-9]|\+|\-|\*|\/|\=|\.|Del|C$/;
+
+    if (!(input.match(inputsAllowed))) {
+        return;
+    }
+
     if (input == 'Del') {
         const arr = screenElement.value.split('');
         arr.pop();
@@ -102,8 +127,7 @@ function calculate(buttonPress) {
 
     const formulaValues = getFormulaValues(screenElement.value);
 
-
-    if ( (!('operator' in formulaValues)) || (!('secondNumber' in formulaValues))) {
+    if ( (!formulaValues) || (!('operator' in formulaValues)) || (!('secondNumber' in formulaValues))) {
         return '';
     }
 
