@@ -49,37 +49,40 @@ const calculatorElement = document.querySelector('#calculator');
 const screenElement = document.querySelector('#screen');
 
 calculatorElement.addEventListener('click', (event) => {
-    if (event.target.textContent == 'Del') {
+    processInput(event.target.textContent);
+    
+});
+
+function processInput(input) {
+    if (input == 'Del') {
         const arr = screenElement.value.split('');
         arr.pop();
         screenElement.value = arr.join('');
         return;
     }
 
-    if (event.target.textContent == 'C') {
+    if (input == 'C') {
         clear();
         return;
     }
 
-    let equals = calculate(event.target.textContent);
+    let equals = calculate(input);
     if (equals) {
         screenElement.value = equals;
         isResultDisplayed = true;
     }
 
-    if (event.target.textContent == '=') {
+    if (input == '=') {
         return;
     }
 
-    if (event.target.textContent.match(/[0-9.]/) && isResultDisplayed) {
+    if (input.match(/[0-9.]/) && isResultDisplayed) {
         clear();
     }
 
-    if (event.target.localName == 'button') {
-        screenElement.value += event.target.textContent;
-    }
-    
-});
+    screenElement.value += input;   
+
+}
 
 function calculate(buttonPress) {
     //calculator container event triggers
