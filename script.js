@@ -45,6 +45,22 @@ function clear() {
     isResultDisplayed = false;
 }
 
+function hasLongDecimals(number, minDecimalLength = 5) {
+  if (typeof number !== 'number' || isNaN(number)) {
+    return false;
+  }
+
+  const numString = number.toString();
+  const parts = numString.split('.');
+
+  if (parts.length < 2) {
+    return false;
+  }
+
+  const decimalPart = parts[1];
+  return decimalPart.length >= minDecimalLength;
+}
+
 const calculatorElement = document.querySelector('#calculator');
 const screenElement = document.querySelector('#screen');
 
@@ -96,6 +112,13 @@ function processInput(input) {
 
     let equals = calculate(input);
     if (equals) {
+         
+        if (hasLongDecimals(Number(equals))) {
+            equals = Math.floor(Number(equals) * 100) / 100;
+            equals = equals.toString()
+            console.log('has long decimal -> ' + equals);
+        }
+
         screenElement.value = equals;
         result = equals;
     }
